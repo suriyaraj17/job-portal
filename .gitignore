@@ -1,0 +1,56 @@
+# =========================
+# Python / Django
+# =========================
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+*.sqlite3
+
+# Django media & static
+media/
+staticfiles/
+
+# Environment variables
+.env
+.env.*
+*.env
+
+# Django secrets
+local_settings.py
+
+# Logs
+*.log
+
+# =========================
+# Node / React
+# =========================
+node_modules/
+dist/
+build/
+.vite/
+
+# React env
+frontend/.env
+frontend/.env.local
+
+# =========================
+# VS Code / IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Deployment
+# =========================
+*.pem
+*.key
