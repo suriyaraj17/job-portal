@@ -1,10 +1,8 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import pymysql
 import dj_database_url
 
-pymysql.install_as_MySQLdb()
 
 
 # Load environment variables from .env
@@ -35,7 +33,7 @@ INSTALLED_APPS = [
 
     "accounts",
     "jobs",
-    
+    "whitenoise.runserver_nostatic",
 ]
 
 
@@ -44,6 +42,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
 
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
 
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -73,14 +72,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'jobportal.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
-        'PORT': os.getenv('DB_PORT', '3306'),
-    }
+    "default": dj_database_url.config(
+        default="sqlite:///" + str(BASE_DIR / "db.sqlite3"),
+        conn_max_age=600,
+        ssl_require=not DEBUG,
+    )
 }
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -106,16 +102,14 @@ USE_TZ = True
 
 # Static Files
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media Files (for resumes, profile pics)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS (so React frontend can access Django)
-CORS_ALLOW_ALL_ORIGINS = True
 
 # REST Framework default settings
 REST_FRAMEWORK = {
@@ -139,18 +133,17 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = "rajsuriya3269@gmail.com"
-EMAIL_HOST_PASSWORD = "ofru ckbi ndgp fobb"  # <-- Gmail App Password only!
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 DEFAULT_FROM_EMAIL = "Job Portal <rajsuriya3269@gmail.com>"
 
 
 # ✅ CORS (React frontend access)
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
+    "https://your-frontend-url.onrender.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
-ALLOWED_HOSTS = ["*"]  # safe for now, we tighten later
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
