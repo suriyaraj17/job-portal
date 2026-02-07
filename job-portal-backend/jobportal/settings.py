@@ -141,9 +141,7 @@ DEFAULT_FROM_EMAIL = "Job Portal <rajsuriya3269@gmail.com>"
 
 # ✅ CORS (React frontend access)
 CORS_ALLOWED_ORIGINS = [
-    "https://your-frontend-url.onrender.com",
+    "https://job-portal-1-r7pg.onrender.com",
 ]
-
-CORS_ALLOW_CREDENTIALS = True
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
