@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import api from "../api/axios";
 import Navbar from "../components/Navbar";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function CandidateProfile() {
   const { seekerId } = useParams();
   const [profile, setProfile] = useState(null);
@@ -56,7 +58,7 @@ export default function CandidateProfile() {
         <strong>Resume:</strong>{" "}
         {profile.resume ? (
           <a
-          href={`${import.meta.env.VITE_API_URL}${profile.resume}`}
+          href={`${BASE_URL}${profile.resume}`}
 
             target="_blank"
             rel="noreferrer"

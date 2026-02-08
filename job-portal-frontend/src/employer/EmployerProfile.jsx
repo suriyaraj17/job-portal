@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import Navbar from "../components/Navbar";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function EmployerProfile() {
   const [profile, setProfile] = useState(null);
   const [form, setForm] = useState({});
@@ -97,11 +99,11 @@ export default function EmployerProfile() {
             <img
               src={
                logoPreview
-                 ? `${import.meta.env.VITE_API_URL}$
+                 ? `${BASE_URL}$
               {logoPreview}`
                   : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
               }
-              
+
               alt="logo"
               style={{
                 width: "90px",

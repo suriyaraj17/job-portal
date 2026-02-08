@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import Navbar from "../components/Navbar";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function EditSeekerProfile() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -167,7 +169,7 @@ export default function EditSeekerProfile() {
                 <img
                   src={
                     profile.profile_pic
-                      ? `http://127.0.0.1:8000${profile.profile_pic}`
+                      ? `${BASE_URL}${profile.profile_pic}`
                       : "https://cdn-icons-png.flaticon.com/512/847/847969.png"
                   }
                   alt="profile"
@@ -346,7 +348,7 @@ export default function EditSeekerProfile() {
                   <small className="d-block mt-2 text-muted">
                     Current:{" "}
                     <a
-                      href={`http://127.0.0.1:8000${profile.resume}`}
+                      href={`${BASE_URL}${profile.resume}`}
                       target="_blank"
                       rel="noreferrer"
                     >

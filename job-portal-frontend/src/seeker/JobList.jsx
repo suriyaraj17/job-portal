@@ -3,6 +3,9 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
 import Navbar from "../components/Navbar";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
+
 export default function JobDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -146,7 +149,7 @@ export default function JobDetails() {
                         job.company_logo
                           ? job.company_logo.startsWith("http")
                             ? job.company_logo
-                            : `http://127.0.0.1:8000${job.company_logo}`
+                            : `${BASE_URL}${job.company_logo}`
                           : "https://via.placeholder.com/64"
                       }
                       alt="company"
