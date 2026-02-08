@@ -96,10 +96,12 @@ export default function EmployerProfile() {
           <div className="text-center mb-3">
             <img
               src={
-                logoPreview
-                  ? `http://127.0.0.1:8000${logoPreview}`
+               logoPreview
+                 ? `${import.meta.env.VITE_API_URL}$
+              {logoPreview}`
                   : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
               }
+              
               alt="logo"
               style={{
                 width: "90px",

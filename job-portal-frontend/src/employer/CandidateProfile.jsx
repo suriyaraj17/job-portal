@@ -56,7 +56,8 @@ export default function CandidateProfile() {
         <strong>Resume:</strong>{" "}
         {profile.resume ? (
           <a
-            href={`http://127.0.0.1:8000${profile.resume}`}
+          href={`${import.meta.env.VITE_API_URL}${profile.resume}`}
+
             target="_blank"
             rel="noreferrer"
           >
