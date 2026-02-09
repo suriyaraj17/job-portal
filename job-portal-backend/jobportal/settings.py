@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     "accounts",
     "jobs",
     "whitenoise.runserver_nostatic",
+    "cloudinary",
+    "cloudinary_storage",
+
 ]
 
 
