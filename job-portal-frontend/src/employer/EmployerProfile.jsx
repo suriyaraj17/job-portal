@@ -97,14 +97,12 @@ export default function EmployerProfile() {
         <form onSubmit={handleSubmit} className="card p-4 shadow-sm">
           <div className="text-center mb-3">
             <img
-              src={
-               logoPreview
-                 ? `${BASE_URL}$
-              {logoPreview}`
-                  : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-              }
-
-              alt="logo"
+             src={
+    logoPreview
+      ? `${BASE_URL}${logoPreview}`
+      : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+  }
+  alt="logo"
               style={{
                 width: "90px",
                 height: "90px",
