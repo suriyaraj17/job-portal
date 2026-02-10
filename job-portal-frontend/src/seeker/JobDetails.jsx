@@ -53,8 +53,13 @@ export default function JobDetails() {
 
               <div className="d-flex align-items-center gap-2 mb-3">
                 <img
-                  src={job.company_logo || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
-                  alt="logo"
+  src={
+    logoPreview
+      ? logoPreview
+      : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+  }
+  alt="logo"
+
                   style={{
                     width: "38px",
                     height: "38px",
@@ -115,7 +120,12 @@ export default function JobDetails() {
 
               <div className="text-center mb-3">
                 <img
-                  src={job.company_logo || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
+                    src={
+    logoPreview
+      ? logoPreview
+      : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+  }
+  alt="logo"              
                   alt="logo"
                   style={{
                     width: "60px",

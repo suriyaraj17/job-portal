@@ -57,14 +57,9 @@ export default function CandidateProfile() {
       <p>
         <strong>Resume:</strong>{" "}
         {profile.resume ? (
-          <a
-          href={`${BASE_URL}${profile.resume}`}
-
-            target="_blank"
-            rel="noreferrer"
-          >
-            View / Download
-          </a>
+    <a href={profile.resume} target="_blank" rel="noreferrer">
+  View / Download
+</a>
         ) : (
           "Not uploaded"
         )}

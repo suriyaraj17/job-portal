@@ -167,11 +167,7 @@ export default function EditSeekerProfile() {
               {/* Left side: profile pic + name */}
               <div className="d-flex align-items-center gap-3">
                 <img
-                  src={
-                    profile.profile_pic
-                      ? `${BASE_URL}${profile.profile_pic}`
-                      : "https://cdn-icons-png.flaticon.com/512/847/847969.png"
-                  }
+                 src={profile.profile_pic}
                   alt="profile"
                   width="70"
                   height="70"
@@ -347,13 +343,9 @@ export default function EditSeekerProfile() {
                 {profile.resume && !resume && (
                   <small className="d-block mt-2 text-muted">
                     Current:{" "}
-                    <a
-                      href={`${BASE_URL}${profile.resume}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      View / Download
-                    </a>
+                    <a href={profile.resume} target="_blank" rel="noreferrer">
+  View / Download
+</a>
                   </small>
                 )}
               </div>

@@ -145,13 +145,12 @@ export default function JobDetails() {
                   {/* Right side: Company logo + actions */}
                   <div className="text-end" style={{ minWidth: "220px" }}>
                     <img
-                      src={
-                        job.company_logo
-                          ? job.company_logo.startsWith("http")
-                            ? job.company_logo
-                            : `${BASE_URL}${job.company_logo}`
-                          : "https://via.placeholder.com/64"
-                      }
+                       src={
+    logoPreview
+      ? logoPreview
+      : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+  }
+  alt="logo"
                       alt="company"
                       width="64"
                       height="64"
