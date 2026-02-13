@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta
+from cloudinary.models import CloudinaryField
 
 
 class AdminProfile(models.Model):
@@ -17,7 +18,8 @@ class EmployerProfile(models.Model):
     company_name = models.CharField(max_length=255)
     phone = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=500, blank=True, null=True)
-    company_logo = models.ImageField(upload_to="company_logos/", blank=True, null=True)
+    # company_logo = models.ImageField(upload_to="company_logos/", blank=True, null=True)
+    company_logo = CloudinaryField('image', blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     website = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
@@ -28,9 +30,12 @@ class EmployerProfile(models.Model):
 
 class JobSeekerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="seeker_profile")
+
     phone = models.CharField(max_length=20, blank=True, null=True)
-    resume = models.FileField(upload_to="resumes/", blank=True, null=True)
-    profile_pic = models.ImageField(upload_to="profile_pics/", blank=True, null=True)
+    # resume = CloudinaryField('resume', resource_type='raw', blank=True, null=True)
+    resume = CloudinaryField('resume', resource_type='raw', blank=True, null=True)
+    profile_pic = CloudinaryField('image', blank=True, null=True)
+
     skills = models.TextField(blank=True, null=True)
     experience_years = models.DecimalField(max_digits=4, decimal_places=1, default=0.0)
     college_name = models.CharField(max_length=255, blank=True, null=True)
@@ -38,7 +43,6 @@ class JobSeekerProfile(models.Model):
     cgpa = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)
     passed_out_year = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
-
     def __str__(self):
         return f"{self.user.get_full_name() or self.user.username}"
 

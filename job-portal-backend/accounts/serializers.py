@@ -18,21 +18,32 @@ class UserSerializer(serializers.ModelSerializer):
 # =========================
 class EmployerProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    company_logo = serializers.SerializerMethodField()
 
     class Meta:
         model = EmployerProfile
-        fields = "__all__"
+        fields = "_all_"
 
+    def get_company_logo(self, obj):
+        if obj.company_logo:
+            return obj.company_logo.url
+        return None
 
 # =========================
 # JOB SEEKER PROFILE SERIALIZER
 # =========================
 class JobSeekerProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    resume = serializers.SerializerMethodField()
 
     class Meta:
         model = JobSeekerProfile
-        fields = "__all__"
+        fields = "_all_"
+
+    def get_resume(self, obj):
+        if obj.resume:
+            return obj.resume.url
+        return None
 
 
 # =========================
