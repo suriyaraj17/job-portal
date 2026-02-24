@@ -16,34 +16,60 @@ class UserSerializer(serializers.ModelSerializer):
 # =========================
 # EMPLOYER PROFILE SERIALIZER
 # =========================
+# class EmployerProfileSerializer(serializers.ModelSerializer):
+#     user = UserSerializer(read_only=True)
+#     company_logo = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = EmployerProfile
+#         fields = "_all_"
+
+#     def get_company_logo(self, obj):
+#         if obj.company_logo:
+#             return obj.company_logo.url
+#         return None
+
 class EmployerProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     company_logo = serializers.SerializerMethodField()
 
     class Meta:
         model = EmployerProfile
-        fields = "_all_"
+        fields = "__all__"
 
     def get_company_logo(self, obj):
-        if obj.company_logo:
-            return obj.company_logo.url
-        return None
+        return obj.company_logo.url if obj.company_logo else None
 
 # =========================
 # JOB SEEKER PROFILE SERIALIZER
 # =========================
+# class JobSeekerProfileSerializer(serializers.ModelSerializer):
+#     user = UserSerializer(read_only=True)
+#     resume = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = JobSeekerProfile
+#         fields = "_all_"
+
+#     def get_resume(self, obj):
+#         if obj.resume:
+#             return obj.resume.url
+#         return None
+
 class JobSeekerProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     resume = serializers.SerializerMethodField()
+    profile_pic = serializers.SerializerMethodField()
 
     class Meta:
         model = JobSeekerProfile
-        fields = "_all_"
+        fields = "__all__"
 
     def get_resume(self, obj):
-        if obj.resume:
-            return obj.resume.url
-        return None
+        return obj.resume.url if obj.resume else None
+
+    def get_profile_pic(self, obj):
+        return obj.profile_pic.url if obj.profile_pic else None
 
 
 # =========================
