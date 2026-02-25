@@ -91,24 +91,36 @@ class EmployerDetailView(APIView):
 
 
 # Job-Seeker Profile
+from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from .models import JobSeekerProfile
+from .serializers import JobSeekerProfileSerializer
+
 class SeekerDetailView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request):
-        try:
-            profile = request.user.seeker_profile
-        except JobSeekerProfile.DoesNotExist:
-            return Response({"detail": "No seeker profile"}, status=404)
-
+        profile = JobSeekerProfile.objects.get(user=request.user)
         serializer = JobSeekerProfileSerializer(profile)
         return Response(serializer.data)
 
     def put(self, request):
-        profile = request.user.seeker_profile
-        serializer = JobSeekerProfileSerializer(profile, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        profile = JobSeekerProfile.objects.get(user=request.user)
+        serializer = JobSeekerProfileSerializer(
+            profile,
+            data=request.data,
+            partial=True
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=400)
+    
 
 class UploadSeekerProfilePic(APIView):
     permission_classes = [IsAuthenticated]
