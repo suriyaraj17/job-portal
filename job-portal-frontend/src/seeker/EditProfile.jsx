@@ -52,46 +52,48 @@ export default function EditSeekerProfile() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const uploadResume = async () => {
-    if (!resume) return;
-    const formData = new FormData();
-    formData.append("resume", resume);
 
-    await api.post("/accounts/seeker/upload-resume/", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-  };
-
-  const uploadProfilePic = async () => {
-    if (!profilePic) return;
-    const formData = new FormData();
-    formData.append("profile_pic", profilePic);
-
-    await api.post("/accounts/seeker/upload-profile-pic/", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-  };
 
   // ✅ Save profile
-  const handleSave = async () => {
-    setMsg("");
-    setErr("");
+const handleSave = async () => {
+  setMsg("");
+  setErr("");
 
-    try {
-      await api.put("/accounts/profile/seeker/", form);
+  try {
+    const formData = new FormData();
 
-      if (resume) await uploadResume();
-      if (profilePic) await uploadProfilePic();
+    // text fields
+    formData.append("skills", form.skills);
+    formData.append("experience_years", form.experience_years);
+    formData.append("college_name", form.college_name);
+    formData.append("degree", form.degree);
+    formData.append("cgpa", form.cgpa);
+    formData.append("passed_out_year", form.passed_out_year);
 
-      setMsg("Profile saved successfully ✅");
-      setResume(null);
-      setProfilePic(null);
-
-      fetchProfile();
-    } catch {
-      setErr("Profile save failed ❌");
+    // file fields
+    if (resume) {
+      formData.append("resume", resume);
     }
-  };
+
+    if (profilePic) {
+      formData.append("profile_pic", profilePic);
+    }
+
+    await api.put("/accounts/profile/seeker/", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    setMsg("Profile saved successfully ✅");
+    setResume(null);
+    setProfilePic(null);
+
+    fetchProfile();
+
+  } catch (error) {
+    console.log(error.response?.data);
+    setErr("Profile save failed ❌");
+  }
+};
 
   // ✅ Delete Resume
   const handleDeleteResume = async () => {
