@@ -71,3 +71,13 @@ class PasswordResetOTP(models.Model):
     def is_expired(self):
         from django.utils import timezone
         return (timezone.now() - self.created_at).seconds > 300  # 5 minutes        
+    
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=User)
+def create_user_profiles(sender, instance, created, **kwargs):
+    if created:
+        JobSeekerProfile.objects.get_or_create(user=instance)
+        EmployerProfile.objects.get_or_create(user=instance)

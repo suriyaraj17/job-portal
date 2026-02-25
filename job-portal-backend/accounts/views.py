@@ -98,17 +98,34 @@ from rest_framework.response import Response
 from .models import JobSeekerProfile
 from .serializers import JobSeekerProfileSerializer
 
+
+from django.shortcuts import get_object_or_404
+
 class SeekerDetailView(APIView):
     permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request):
-        profile = JobSeekerProfile.objects.get(user=request.user)
+        try:
+            profile = JobSeekerProfile.objects.get(user=request.user)
+        except JobSeekerProfile.DoesNotExist:
+            return Response(
+                {"detail": "Profile not found"},
+                status=404
+            )
+
         serializer = JobSeekerProfileSerializer(profile)
         return Response(serializer.data)
 
     def put(self, request):
-        profile = JobSeekerProfile.objects.get(user=request.user)
+        try:
+            profile = JobSeekerProfile.objects.get(user=request.user)
+        except JobSeekerProfile.DoesNotExist:
+            return Response(
+                {"detail": "Profile not found"},
+                status=404
+            )
+
         serializer = JobSeekerProfileSerializer(
             profile,
             data=request.data,
